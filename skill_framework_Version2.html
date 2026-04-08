@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Skill 框架 Demo</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 40px; }
+    #output { margin-top: 20px; font-size: 22px; color: #2062af; }
+    button { padding: 8px 18px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h2>Skill 框架：输出 helloworld</h2>
+  <button id="run-skill-btn">运行 helloworld skill</button>
+  <div id="output"></div>
+  <script>
+    // Skill 框架定义
+    window.skill = window.skill || {};
+    window.skill.helloWorld = function() { return "helloworld"; };
+    // 框架调用
+    document.getElementById('run-skill-btn').onclick = function() {
+      document.getElementById('output').innerText = window.skill.helloWorld();
+    };
+  </script>
+</body>
+</html>
