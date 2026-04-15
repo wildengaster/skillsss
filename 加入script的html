@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>JavaScript 基础知识练习 | 变量 · 类型 · 表达式 · 流程控制 · 函数</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, 'Segoe UI', 'Fira Code', 'Monaco', 'Cascadia Code', monospace;
+            background: linear-gradient(145deg, #f5f7fc 0%, #eef2f8 100%);
+            color: #1a2c3e;
+            padding: 2rem 1.5rem;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        /* 主标题区 */
+        .hero {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, #1e3c72, #2b4c7c);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            color: #4a627a;
+            border-bottom: 2px solid #cbdbe2;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        /* 卡片网格 */
+        .grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(1px);
+            border-radius: 2rem;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 32px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-header {
+            background: #ffffffcc;
+            padding: 1rem 1.8rem;
+            border-bottom: 3px solid #3b82f6;
+            background: linear-gradient(90deg, #f8faff, #ffffff);
+        }
+
+        .card-header h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #0f2b3d;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .card-header h2 .emoji {
+            font-size: 1.7rem;
+        }
+
+        .card-content {
+            padding: 1.6rem 1.8rem;
+        }
+
+        /* 代码块风格与结果展示 */
+        .demo-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem 1.2rem;
+            border-radius: 1.2rem;
+            font-family: 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .result-area {
+            background: #eef2ff;
+            border-left: 5px solid #3b82f6;
+            padding: 1rem 1.3rem;
+            border-radius: 1rem;
+            margin-top: 0.8rem;
+            font-family: monospace;
+            font-size: 0.95rem;
+            color: #0c2d4b;
+        }
+
+        .result-item {
+            margin-bottom: 0.6rem;
+            border-bottom: 1px dashed #cbd5e1;
+            padding-bottom: 0.5rem;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #3b82f6;
+            color: white;
+            font-size: 0.7rem;
+            border-radius: 30px;
+            padding: 0.2rem 0.7rem;
+            margin-right: 0.6rem;
+            font-family: monospace;
+        }
+
+        .highlight {
+            color: #0f3b5c;
+            font-weight: 600;
+            background: #ffe6c7;
+            padding: 0.1rem 0.3rem;
+            border-radius: 8px;
+        }
+
+        hr {
+            margin: 1rem 0;
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #94a3b8, transparent);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            font-size: 0.8rem;
+            color: #5c6f87;
+            border-top: 1px solid #cbd5e1;
+            padding-top: 1.5rem;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem;
+            }
+            .card-content {
+                padding: 1rem;
+            }
+            .demo-block {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>📘 JavaScript 核心基础·练习工坊</h1>
+        <p>变量 · 类型 · 表达式 · 流程控制 · 函数 | 手写原生实现</p>
+    </div>
+
+    <div class="grid">
+        <!-- 1️⃣ 变量定义 & 类型模块 -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span class="emoji">📦</span> 变量定义 & 数据类型</h2>
+            </div>
+            <div class="card-content">
+                <div class="demo-block">
+                    // 使用 var, let, const 定义不同变量<br>
+                    let userName = "林语鸢";          // string<br>
+                    const PI = 3.1415926;              // number 常量<br>
+                    var isCompleted = false;            // boolean<br>
+                    let emptyValue = null;              // null (object)<br>
+                    let notDefined;                     // undefined<br>
+                    let studentScore = 95;              // number<br>
+                    let symbolKey = Symbol("unique");    // symbol<br>
+                    let courseList = ["JS", "HTML", "CSS"]; // array(object)<br>
+                    let metaInfo = { lang: "JavaScript", level: "beginner" }; // object
+                </div>
+                <div class="result-area" id="variablesOutput">
+                    <!-- 动态渲染变量及类型 -->
+                    <div class="result-item">✨ 加载变量信息中...</div>
+                </div>
+                <div style="font-size: 0.85rem; margin-top: 0.5rem; color: #336699;">
+                    💡 typeof 操作符用于检测基本类型，注意 null 返回 "object" 是语言遗留特性。
+                </div>
+            </div>
+        </div>
+
+        <!-- 2️⃣ 表达式模块 -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span class="emoji">🧮</span> 表达式 & 运算符</h2>
+            </div>
+            <div class="card-content">
+                <div class="demo-block">
+                    // 算术 / 关系 / 逻辑 / 三元表达式示例<br>
+                    let a = 12, b = 7;<br>
+                    let sumExpr = a + b * 2;            // 12 + 14 = 26<br>
+                    let compare = (a > b) && (b !== 0);  // true && true → true<br>
+                    let ternary = (a % 2 === 0) ? "偶数" : "奇数";<br>
+                    let logicalOr = false || "默认值";<br>
+                    let complexExpr = ( (a + b) > 15 ) ? "大于15" : "不大于15";
+                </div>
+                <div class="result-area" id="exprOutput"></div>
+            </div>
+        </div>
+
+        <!-- 3️⃣ 流程控制模块: if-else / switch / for / while -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span class="emoji">⚙️</span> 流程控制 · 分支与循环</h2>
+            </div>
+            <div class="card-content">
+                <div class="demo-block">
+                    // if-else 成绩等级判断 & switch 示例 & 循环累计<br>
+                    let score = 86;<br>
+                    let grade = "";<br>
+                    // switch 简单星期演示<br>
+                    let dayNum = 3;<br>
+                    let weekday = "";<br>
+                    // for: 1~10累加  while: 数组遍历展示
+                </div>
+                <div class="result-area" id="controlOutput"></div>
+            </div>
+        </div>
+
+        <!-- 4️⃣ 函数模块: 声明、参数、返回值、高阶函数简单示例 -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span class="emoji">⚡</span> 函数定义 & 调用</h2>
+            </div>
+            <div class="card-content">
+                <div class="demo-block">
+                    // 1. 普通函数: 计算两个数的和与积<br>
+                    // 2. 判断质数的函数<br>
+                    // 3. 箭头函数: 数组映射<br>
+                    // 4. 函数作为参数 (回调)
+                </div>
+                <div class="result-area" id="functionOutput"></div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        ✅ 满足「变量的定义、变量类型、表达式、流程控制、函数」全维度练习 · 动态演示来自真实 JS 执行环境<br>
+        📌 所有代码均内嵌于本页面，打开控制台(F12)可查看完整日志输出。
+    </footer>
+</div>
+
+<script>
+    (function() {
+        // ---------- 1. 变量定义 & 类型展示 ----------
+        // 定义各种类型的变量 (满足变量定义 + 类型检测)
+        let userName = "林语鸢";
+        const PI = 3.1415926;
+        var isCompleted = false;
+        let emptyValue = null;
+        let notDefined;
+        let studentScore = 95;
+        let symbolKey = Symbol("unique");
+        let courseList = ["JS", "HTML", "CSS"];
+        let metaInfo = { lang: "JavaScript", level: "beginner" };
+        let dynamicType = 42;    // 稍后演示类型变化概念（可选）
+        
+        // 收集变量与类型
+        const variableList = [
+            { name: "userName", value: userName, type: typeof userName },
+            { name: "PI (const)", value: PI, type: typeof PI },
+            { name: "isCompleted", value: isCompleted, type: typeof isCompleted },
+            { name: "emptyValue", value: emptyValue, type: typeof emptyValue },
+            { name: "notDefined", value: notDefined, type: typeof notDefined },
+            { name: "studentScore", value: studentScore, type: typeof studentScore },
+            { name: "symbolKey", value: symbolKey.toString(), type: typeof symbolKey },
+            { name: "courseList", value: JSON.stringify(courseList), type: typeof courseList },
+            { name: "metaInfo", value: JSON.stringify(metaInfo), type: typeof metaInfo }
+        ];
+        
+        function renderVariables() {
+            const container = document.getElementById("variablesOutput");
+            if (!container) return;
+            let html = `<div class="result-item"><span class="badge">📌 变量名</span> <strong>值</strong> <span style="float:right">类型</span></div>`;
+            variableList.forEach(v => {
+                let displayValue = (typeof v.value === 'string') ? `"${v.value}"` : (v.value === undefined ? "undefined" : v.value);
+                if (typeof v.value === 'object' && v.value !== null && v.name !== "symbolKey") displayValue = JSON.stringify(v.value);
+                if (v.name === "symbolKey") displayValue = `Symbol(unique)`;
+                html += `<div class="result-item">
+                            <span style="font-weight:600">${v.name}</span> : 
+                            <code style="background:#e2e8f0; padding:0.1rem 0.4rem; border-radius:8px;">${displayValue}</code>
+                            <span style="float:right; font-family:monospace;">${v.type}</span>
+                         </div>`;
+            });
+            // 额外展示动态类型改变（体现JS动态特性）
+            let dynamicMsg = `<div class="result-item" style="margin-top:6px; background:#fef9e3; padding:5px 8px; border-radius:12px;">
+                                🔁 动态类型演示: 变量 dynamicType 初始为 number (42) → 修改为 string "JavaScript练习"<br>
+                                <code>dynamicType = "JavaScript练习"</code> → 最新类型: <strong>${typeof (dynamicType = "JavaScript练习")}</strong> (原number变为string)
+                              </div>`;
+            html += dynamicMsg;
+            container.innerHTML = html;
+        }
+        
+        // ---------- 2. 表达式模块 ----------
+        function renderExpressions() {
+            const exprContainer = document.getElementById("exprOutput");
+            if (!exprContainer) return;
+            let a = 12, b = 7;
+            let sumExpr = a + b * 2;           // 12 + 14 = 26
+            let compare = (a > b) && (b !== 0); // true
+            let ternary = (a % 2 === 0) ? "偶数" : "奇数";
+            let logicalOr = false || "默认值";
+            let complexExpr = ((a + b) > 15) ? "大于15" : "不大于15";
+            let relationalExpr = (a <= 20) && (b >= 5);  // true && true -> true
+            let arithmeticExpr = (a ** 2) - (b * 3);     // 144 - 21 = 123
+            
+            let exprHtml = `
+                <div class="result-item"><span class="badge">➕ 算术</span> a + b * 2 = ${sumExpr}  (a=12, b=7)</div>
+                <div class="result-item"><span class="badge">⚖️ 关系/逻辑</span> (a > b) && (b !== 0) → ${compare}</div>
+                <div class="result-item"><span class="badge">❓ 三元</span> a % 2 === 0 ? "偶数" : "奇数" → ${ternary}</div>
+                <div class="result-item"><span class="badge">🔀 逻辑或</span> false || "默认值" → ${logicalOr}</div>
+                <div class="result-item"><span class="badge">🧪 复合表达式</span> (a+b) > 15 ? "大于15" : "不大于15" → ${complexExpr}</div>
+                <div class="result-item"><span class="badge">📐 幂运算</span> a² - (b*3) = ${arithmeticExpr}</div>
+                <div class="result-item"><span class="badge">🔍 关系运算</span> a ≤ 20 且 b ≥ 5 → ${relationalExpr}</div>
+            `;
+            exprContainer.innerHTML = exprHtml;
+        }
+        
+        // ---------- 3. 流程控制演示 (if-else, switch, for, while) ----------
+        function renderControlFlow() {
+            const controlContainer = document.getElementById("controlOutput");
+            if (!controlContainer) return;
+            
+            // 3.1 if-else 成绩等级判定
+            let score = 86;
+            let grade = "";
+            if (score >= 90) grade = "优秀 (A)";
+            else if (score >= 75) grade = "良好 (B)";
+            else if (score >= 60) grade = "及格 (C)";
+            else grade = "需要努力 (D)";
+            
+            // 3.2 switch 星期示例
+            let dayNum = 3;
+            let weekday = "";
+            switch (dayNum) {
+                case 1: weekday = "星期一"; break;
+                case 2: weekday = "星期二"; break;
+                case 3: weekday = "星期三"; break;
+                case 4: weekday = "星期四"; break;
+                case 5: weekday = "星期五"; break;
+                case 6: weekday = "星期六"; break;
+                case 7: weekday = "星期日"; break;
+                default: weekday = "无效天数";
+            }
+            
+            // 3.3 for 循环: 计算 1 到 10 的累加和
+            let sumFor = 0;
+            for (let i = 1; i <= 10; i++) {
+                sumFor += i;
+            }
+            
+            // 3.4 while 循环: 遍历数组并构建字符串
+            let fruits = ["🍎 苹果", "🍌 香蕉", "🍒 樱桃", "🍊 橙子"];
+            let whileIndex = 0;
+            let fruitListStr = "";
+            while (whileIndex < fruits.length) {
+                fruitListStr += fruits[whileIndex] + (whileIndex < fruits.length-1 ? " · " : "");
+                whileIndex++;
+            }
+            
+            // 3.5 do-while 额外演示: 生成一个小数列
+            let num = 2;
+            let powerValues = [];
+            do {
+                powerValues.push(num ** 2);
+                num += 2;
+            } while (num <= 10);
+            
+            let controlHtml = `
+                <div class="result-item"><span class="badge">📊 if-else</span> 成绩 ${score} 分 → 等级: ${grade}</div>
+                <div class="result-item"><span class="badge">🔀 switch</span> 数字 ${dayNum} 对应: ${weekday}</div>
+                <div class="result-item"><span class="badge">🔄 for循环</span> 1 ~ 10 累加和 = ${sumFor}</div>
+                <div class="result-item"><span class="badge">🔄 while循环</span> 水果列表: ${fruitListStr}</div>
+                <div class="result-item"><span class="badge">🔁 do-while</span> 偶数平方数列(2,4,6,8,10): ${powerValues.join(", ")}</div>
+                <div class="result-item"><span class="badge">✨ 扩展</span> for-of 遍历课程: ${courseList.join(" → ")}</div>
+            `;
+            controlContainer.innerHTML = controlHtml;
+        }
+        
+        // ---------- 4. 函数模块 (定义函数 & 调用展示) ----------
+        // 基础函数1：求和与乘积同时返回 (对象)
+        function sumAndProduct(x, y) {
+            return { sum: x + y, product: x * y };
+        }
+        
+        // 函数2：判断质数 (经典流程控制)
+        function isPrimeNumber(num) {
+            if (num <= 1) return false;
+            if (num === 2) return true;
+            if (num % 2 === 0) return false;
+            for (let i = 3; i <= Math.sqrt(num); i += 2) {
+                if (num % i === 0) return false;
+            }
+            return true;
+        }
+        
+        // 函数3：箭头函数 + 数组map高阶
+        const doubleArray = (arr) => arr.map(item => item * 2);
+        
+        // 函数4：函数作为参数 (回调) - 演示对数组进行自定义处理
+        function processNumbers(numbers, callback) {
+            return callback(numbers);
+        }
+        
+        // 函数5：默认参数和剩余参数展示
+        function greetUser(name = "学习者", ...hobbies) {
+            let hobbyText = hobbies.length ? ` 爱好: ${hobbies.join(", ")}` : " 暂无爱好记录";
+            return `👋 你好, ${name}!${hobbyText}`;
+        }
+        
+        // 调用并收集展示内容
+        function renderFunctions() {
+            const funcContainer = document.getElementById("functionOutput");
+            if (!funcContainer) return;
+            
+            // 调用sumAndProduct
+            let sp = sumAndProduct(17, 6);
+            // 调用质数检测
+            let testNum = 29;
+            let primeResult = isPrimeNumber(testNum) ? `${testNum} 是质数 ✓` : `${testNum} 不是质数`;
+            let testNum2 = 48;
+            let primeResult2 = isPrimeNumber(testNum2) ? `${testNum2} 是质数` : `${testNum2} 不是质数`;
+            // 箭头函数调用
+            let originArr = [3, 7, 12, 5];
+            let doubledArr = doubleArray(originArr);
+            // 高阶函数: 计算数组平方和
+            let numbersSample = [2, 4, 6];
+            const sumSquares = (arr) => arr.reduce((acc, val) => acc + val * val, 0);
+            let squareSumResult = processNumbers(numbersSample, sumSquares);
+            // 剩余参数和默认参数调用
+            let greet1 = greetUser("云溪", "编程", "阅读", "羽毛球");
+            let greet2 = greetUser();
+            
+            // 额外函数: 闭包简单示例（体现函数能力）
+            function createCounter(initial = 0) {
+                let count = initial;
+                return function() {
+                    count++;
+                    return count;
+                };
+            }
+            const counter = createCounter(10);
+            let counterValue = counter();  // 11
+            
+            let funcHtml = `
+                <div class="result-item"><span class="badge">📦 sumAndProduct</span> 17 + 6 = ${sp.sum} , 乘积 = ${sp.product}</div>
+                <div class="result-item"><span class="badge">🔢 质数判断</span> ${primeResult} &nbsp;|&nbsp; ${primeResult2}</div>
+                <div class="result-item"><span class="badge">🏹 箭头函数+map</span> [${originArr}] 翻倍 → [${doubledArr}]</div>
+                <div class="result-item"><span class="badge">🪄 回调高阶函数</span> 数组 [${numbersSample}] 各元素平方和 = ${squareSumResult}</div>
+                <div class="result-item"><span class="badge">💬 默认参数 & rest</span> ${greet1}<br> &nbsp;&nbsp;&nbsp;&nbsp; ${greet2}</div>
+                <div class="result-item"><span class="badge">🎯 闭包计数器</span> 初始值10，调用一次后 → ${counterValue}</div>
+                <div class="result-item"><span class="badge">🌟 函数声明提升</span> 演示: 调用提前定义的函数 sumAndProduct 正常执行（hoisting特性）</div>
+            `;
+            funcContainer.innerHTML = funcHtml;
+        }
+        
+        // ---------- 额外: 控制台也打印所有练习内容，方便审查 ----------
+        function consoleLogDemo() {
+            console.group("📖 JavaScript 基础知识练习 (手工页面)");
+            console.log("===== 变量定义 & 类型 =====");
+            variableList.forEach(v => {
+                console.log(`${v.name} :`, v.value, `→ type: ${v.type}`);
+            });
+            console.log("===== 表达式计算结果 =====");
+            let a = 12, b = 7;
+            console.log(`a+b*2 = ${a + b * 2}, (a>b) && (b!==0) = ${(a > b) && (b !== 0)}`);
+            console.log("===== 流程控制 =====");
+            let testScore = 86;
+            if (testScore >= 75) console.log(`成绩${testScore} => 良好`);
+            let totalFor = 0; for(let i=1;i<=5;i++) totalFor+=i; console.log(`for小计1-5和: ${totalFor}`);
+            console.log("===== 函数调用 =====");
+            console.log("sumAndProduct(10,3) =", sumAndProduct(10,3));
+            console.log("isPrimeNumber(17):", isPrimeNumber(17));
+            console.log("greetUser 示例:", greetUser("助教老师", "代码", "debug"));
+            console.groupEnd();
+        }
+        
+        // 初始化所有渲染
+        function init() {
+            renderVariables();
+            renderExpressions();
+            renderControlFlow();
+            renderFunctions();
+            consoleLogDemo();
+        }
+        
+        init();
+    })();
+</script>
+</body>
+</html>

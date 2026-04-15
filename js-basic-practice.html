@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript基础知识练习</title>
+    <style>
+        body {font-family: "Microsoft Yahei", sans-serif; max-width: 900px; margin: 30px auto; padding: 0 20px;}
+        .block {margin: 25px 0; padding: 18px; border: 1px solid #e0e0e0; border-radius: 8px; background: #fafafa;}
+        h2 {color: #2c3e50; border-left: 4px solid #3498db; padding-left: 10px; margin-top: 0;}
+        pre {background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto; font-size: 14px;}
+    </style>
+</head>
+<body>
+    <h1>JavaScript 基础知识点练习</h1>
+
+    <!-- 1. 变量定义与数据类型 -->
+    <div class="block">
+        <h2>1. 变量定义与数据类型</h2>
+        <pre id="varOutput"></pre>
+    </div>
+
+    <!-- 2. 表达式运算 -->
+    <div class="block">
+        <h2>2. 表达式运算</h2>
+        <pre id="exprOutput"></pre>
+    </div>
+
+    <!-- 3. 流程控制 -->
+    <div class="block">
+        <h2>3. 流程控制语句</h2>
+        <pre id="flowOutput"></pre>
+    </div>
+
+    <!-- 4. 函数 -->
+    <div class="block">
+        <h2>4. 函数定义与调用</h2>
+        <pre id="funcOutput"></pre>
+    </div>
+
+    <script>
+        // ========== 1. 变量定义与数据类型 ==========
+        // 三种声明方式 + 7种基础数据类型
+        let userName = "小明";          // 字符串 String
+        const userAge = 20;             // 数字 Number（常量）
+        var isStudent = true;           // 布尔 Boolean
+        let userInfo = {                // 对象 Object
+            major: "软件工程",
+            grade: "大二"
+        };
+        let courseList = ["HTML", "CSS", "JavaScript"]; // 数组 Array（属于Object）
+        let temp = null;                // Null 类型
+        let unassigned;                 // Undefined 类型
+
+        // 输出到页面
+        const varOutput = document.getElementById("varOutput");
+        varOutput.textContent = `
+// 变量声明与类型
+let userName = "${userName}" → 类型：${typeof userName}
+const userAge = ${userAge} → 类型：${typeof userAge}
+var isStudent = ${isStudent} → 类型：${typeof isStudent}
+对象 userInfo：${JSON.stringify(userInfo)} → 类型：${typeof userInfo}
+数组 courseList：${JSON.stringify(courseList)} → 类型：${typeof courseList}
+let temp = ${temp} → 类型：${typeof temp}
+let unassigned → 类型：${typeof unassigned}
+        `;
+
+        // ========== 2. 表达式运算 ==========
+        let numA = 15, numB = 4;
+        // 算术表达式
+        let add = numA + numB;
+        let sub = numA - numB;
+        let mul = numA * numB;
+        let div = numA / numB;
+        let mod = numA % numB;
+        // 比较表达式
+        let isGt = numA > numB;
+        let isEq = numA === numB;
+        // 逻辑表达式
+        let logicRes = (numA > 10) && (numB < 5);
+
+        const exprOutput = document.getElementById("exprOutput");
+        exprOutput.textContent = `
+// 算术表达式
+numA = ${numA}, numB = ${numB}
+numA + numB = ${add}
+numA - numB = ${sub}
+numA * numB = ${mul}
+numA / numB = ${div.toFixed(2)}
+numA % numB = ${mod}
+
+// 比较表达式
+numA > numB → ${isGt}
+numA === numB → ${isEq}
+
+// 逻辑表达式
+(numA > 10) && (numB < 5) → ${logicRes}
+        `;
+
+        // ========== 3. 流程控制 ==========
+        let flowLog = "";
+
+        // if-else 分支
+        let score = 88;
+        flowLog += "// if-else 分支判断成绩\n";
+        if (score >= 90) {
+            flowLog += "成绩：优秀\n";
+        } else if (score >= 80) {
+            flowLog += "成绩：良好\n";
+        } else if (score >= 60) {
+            flowLog += "成绩：及格\n";
+        } else {
+            flowLog += "成绩：不及格\n";
+        }
+
+        // for 循环遍历数组
+        flowLog += "\n// for 循环遍历课程数组\n";
+        for (let i = 0; i < courseList.length; i++) {
+            flowLog += `第${i+1}门课：${courseList[i]}\n`;
+        }
+
+        // while 循环计数
+        flowLog += "\n// while 循环计数\n";
+        let count = 1;
+        while (count <= 3) {
+            flowLog += `计数：${count}\n`;
+            count++;
+        }
+
+        // switch 分支
+        flowLog += "\n// switch 分支判断星期\n";
+        let weekDay = 3;
+        switch(weekDay) {
+            case 1: flowLog += "今天是星期一\n"; break;
+            case 2: flowLog += "今天是星期二\n"; break;
+            case 3: flowLog += "今天是星期三\n"; break;
+            default: flowLog += "其他日期\n";
+        }
+
+        const flowOutput = document.getElementById("flowOutput");
+        flowOutput.textContent = flowLog;
+
+        // ========== 4. 函数 ==========
+        // 普通函数
+        function addNum(x, y) {
+            return x + y;
+        }
+        // 箭头函数
+        const mulNum = (x, y) => x * y;
+        // 带默认参数的函数
+        function greet(name = "访客") {
+            return `你好，${name}！`;
+        }
+        // 高阶函数（回调函数）
+        function calculate(x, y, callback) {
+            return callback(x, y);
+        }
+
+        const funcOutput = document.getElementById("funcOutput");
+        funcOutput.textContent = `
+// 普通函数 addNum(5, 8) → ${addNum(5, 8)}
+// 箭头函数 mulNum(6, 7) → ${mulNum(6, 7)}
+// 默认参数函数 greet() → ${greet()}
+// 默认参数函数 greet("小红") → ${greet("小红")}
+// 回调函数 calculate(10, 3, addNum) → ${calculate(10, 3, addNum)}
+// 回调函数 calculate(10, 3, mulNum) → ${calculate(10, 3, mulNum)}
+        `;
+
+        console.log("JS基础练习代码执行完成，结果已渲染到页面");
+    </script>
+</body>
+</html>
